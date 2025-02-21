@@ -1,8 +1,7 @@
-# Education Management System (EMS)
+# BK Vault
 
 This repository contains the files necessary to set up for the app.
 
-## Live App Cloud Version : https://ems-98.netlify.app/
 
 ## Setup Instructions
 
