@@ -271,14 +271,14 @@ const Table = ({data,openModal}) => {
       const handleDeactivate = async() => {
         table.getSelectedRowModel().flatRows.map((row) => {
           updateActiveStatus(row.getValue('email'), false)
-          toast.success('Deactivating ' + row.getValue('name'));
+          toast.success('Deactivated ' + row.getValue('name'));
         });
       };
 
       const handleActivate = async() => {
         table.getSelectedRowModel().flatRows.map((row) => {
           updateActiveStatus(row.getValue('email'), true)
-          toast.success('Activating ' + row.getValue('name'));
+          toast.success('Activated ' + row.getValue('name'));
         });
       };
           

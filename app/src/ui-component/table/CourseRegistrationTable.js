@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect, useState } from 'react';
+import React, { useMemo} from 'react';
 import {
     MaterialReactTable,
     useMaterialReactTable,
@@ -9,36 +9,35 @@ import { Box, Typography, Button } from '@mui/material';
 import { lighten } from '@mui/material/styles';
 import { courseSignOut, courseSignin } from 'hooks/registerCourseByStudent';
 import toast, { Toaster } from 'react-hot-toast';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from 'services/firebase';
+// import { doc, getDoc } from 'firebase/firestore';
+// import { db } from 'services/firebase';
 
 const Table = ({ data, studentID, currentRole, openCourseModal }) => {
-    const [newData, setNewData] = useState([]);
+    // const [newData, setNewData] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const newDataArray = [];
-            for (const row of data) {
-                for (const classInfo of row.classArray) {
-                    const teacherRef = doc(db, "users", classInfo.teacherID);
-                    const teacherDoc = await getDoc(teacherRef);
-                    const teacherName = teacherDoc.data().name;
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const newDataArray = [];
+    //         for (const row of data) {
+    //             for (const classInfo of row.classArray) {
+    //                 const teacherRef = doc(db, "users", classInfo.teacherID);
+    //                 const teacherDoc = await getDoc(teacherRef);
+    //                 const teacherName = teacherDoc.data().name;
 
-                    newDataArray.push({
-                        ...row,
-                        classID: classInfo.classID,
-                        date: classInfo.date,
-                        startTime: classInfo.startTime,
-                        endTime: classInfo.endTime,
-                        teacherName: teacherName
-                    });
-                }
-            }
-            setNewData(newDataArray);
-        };
-
-        fetchData();
-    }, [data]);
+    //                 newDataArray.push({
+    //                     ...row,
+    //                     classID: classInfo.classID,
+    //                     date: classInfo.date,
+    //                     startTime: classInfo.startTime,
+    //                     endTime: classInfo.endTime,
+    //                     teacherName: teacherName
+    //                 });
+    //             }
+    //         }
+    //         setNewData(newDataArray);
+    //     };
+    //     fetchData();
+    // }, [data]);
 
     const columns = useMemo(
         () => [
@@ -74,7 +73,7 @@ const Table = ({ data, studentID, currentRole, openCourseModal }) => {
 
     const table = useMaterialReactTable({
         columns,
-        data: newData,
+        data: data,
         editDisplayMode: 'modal',
         enableColumnFilterModes: true,
         enableColumnOrdering: true,
@@ -126,12 +125,12 @@ const Table = ({ data, studentID, currentRole, openCourseModal }) => {
             const handleCourseSignOut = async () => {
                 table.getSelectedRowModel().flatRows.map(async (row) => {
                     const courseCode = row.getValue('courseCode');
-                    const classID = row.getValue('classID');
-
+                    // const classID = row.getValue('classID');
+                    const classID = "L01"
                     const result = await courseSignOut(courseCode, classID, studentID);
 
                     if (result.status === 'success') {
-                        toast.success('Signing out from ' + courseCode + ' successfully!');
+                        toast.success('Unfollowing ' + courseCode + ' successfully!');
                     } else {
                         toast.error('Error: ' + result.message);
                     }
@@ -142,13 +141,14 @@ const Table = ({ data, studentID, currentRole, openCourseModal }) => {
             const handleCourseSignIn = async () => {
                 table.getSelectedRowModel().flatRows.map(async (row) => {
                     const courseCode = row.getValue('courseCode');
-                    const classID = row.getValue('classID');
+                    // const classID = row.getValue('classID');
+                    const classID = "L01"
                     const result = await courseSignin(courseCode, classID, studentID);
-
                     if (result.status === 'success') {
-                        toast.success('Registering ' + courseCode + ' successfully!');
+                        toast.success('Following ' + courseCode + ' successfully!');
                     } else {
                         toast.error('Error: ' + result.message);
+                        // toast.error("You have followed this course")
                     }
                 });
             };

@@ -41,7 +41,8 @@ const CourseDetail = () => {
   };
 
   const role = localStorage.getItem('role');
-  const isTeacher = role === 'teacher';
+  // const isTeacher = role === 'teacher';
+  const isAdmin = role === 'admin';
   const videoRef = useRef();
 
 
@@ -135,7 +136,7 @@ const CourseDetail = () => {
     if (!courseCode) return;
 
     // Nếu document là 1 notification, prompt nội dung mới
-    if (document.type === ECourseDocumentType.NOTIFICATION) {
+    if (document.type === ECourseDocumentType.COMMENT) {
       handleUpdateDialogOpen()
       // await updateNotification(document)
       // setOpenUpdateDialog(false);
@@ -263,12 +264,12 @@ const CourseDetail = () => {
       <input type="file" name="" id="" hidden ref={inputFileRef} onChange={onUploadFile} />
       <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <SubCard title="Notifications">
+        <SubCard title="Comments">
           <Grid container spacing={gridSpacing}>
-              {course.courseDocuments?.filter((item) => item.type === ECourseDocumentType.NOTIFICATION)
+              {course.courseDocuments?.filter((item) => item.type === ECourseDocumentType.COMMENT)
               .map((it) =>
               <Grid item xs={12} sm={12} md={12} lg={6} key={`course-document-item-${it.id}`}>
-                <ContentBox it={it} isTeacher={isTeacher} key={`course-document-item-${it.id}`} bgcolor="warning.light" title={it.content} dark />
+                <ContentBox it={it} isTeacher={isAdmin} key={`course-document-item-${it.id}`} bgcolor="warning.light" title={it.content} dark />
                 </Grid>
               )}
           </Grid>
@@ -281,7 +282,7 @@ const CourseDetail = () => {
             {course.courseDocuments?.filter((item) => item.type === ECourseDocumentType.VIDEO)
               .map((it) =>
               <Grid item lg={12} key={`course-document-item-${it.id}`}>
-                <VideoBox it={it} isTeacher={isTeacher} key={`course-document-item-${it.id}`} />
+                <VideoBox it={it} isTeacher={isAdmin} key={`course-document-item-${it.id}`} />
               </Grid>
               )}
           </Grid>
@@ -294,7 +295,7 @@ const CourseDetail = () => {
             {course.courseDocuments?.filter((item) => item.type === ECourseDocumentType.FILE)
               .map((it) =>
               <Grid item xs={12} sm={6} md={4} lg={4} key={`course-document-item-${it.id}`}>
-                <ContentBox it={it} isTeacher={isTeacher} key={`course-document-item-${it.id}`} bgcolor={theme.palette.secondary.light} title={it.name} />
+                <ContentBox it={it} isTeacher={isAdmin} key={`course-document-item-${it.id}`} bgcolor={theme.palette.secondary.light} title={it.name} />
               </Grid>
               )}
           </Grid>

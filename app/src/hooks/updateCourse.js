@@ -3,7 +3,7 @@ import { db } from 'services/firebase';
 export const ECourseDocumentType = {
   FILE: 'FILE',
   VIDEO: 'VIDEO',
-  NOTIFICATION: 'NOTIFICATION'
+  COMMENT: 'COMMENT'
 };
 // Update course document in the database
 export const updateCourseDocument = async (courseCode, documentData) => {
