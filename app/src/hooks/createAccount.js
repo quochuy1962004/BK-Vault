@@ -1,4 +1,4 @@
-import { setDoc, doc, getDoc, addDoc, collection } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
 import { db } from "services/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "services/firebase";
@@ -69,9 +69,9 @@ export const createAccount = async (output) => {
     // Tạo tài khoản trên Firebase Authentication
     const userCredential = await createUserWithEmailAndPassword(auth, output.email, output.password);
     const user = userCredential.user;
-    
+    console.log("use id", user.uid)
     // Thêm thông tin người dùng vào collection 'users' với ID ngẫu nhiên
-    const userRef = await addDoc(collection(db, "users"), {
+    const userRef = await setDoc(doc(db, "users", user.uid), {
       uid: user.uid,
       email: output.email,
       password: output.password,

@@ -49,13 +49,13 @@ const UploadButton = (course_code) => {
   const onClickUploadBtn = async (course_code) => {
     // Save the selected course code to the state
     setCourseSelected(course_code.course_code);
-    const type = prompt('Enter you document type (FILE, VIDEO, NOTIFICATION)');
+    const type = prompt('Enter you document type (FILE, VIDEO, COMMENT)');
     const typeFormatted = type?.toUpperCase();
 
     // Check if the entered document type is valid
     if (
       !typeFormatted ||
-      ![ECourseDocumentType.FILE, ECourseDocumentType.NOTIFICATION, ECourseDocumentType.VIDEO].includes(typeFormatted)
+      ![ECourseDocumentType.FILE, ECourseDocumentType.COMMENT, ECourseDocumentType.VIDEO].includes(typeFormatted)
     ) {
       console.log('loi roi');
       return;
@@ -63,8 +63,8 @@ const UploadButton = (course_code) => {
 
     setDocumentUploadType(typeFormatted);
 
-    if (typeFormatted === ECourseDocumentType.NOTIFICATION) {
-      const notificationContent = prompt('Enter your notification:');
+    if (typeFormatted === ECourseDocumentType.COMMENT) {
+      const notificationContent = prompt('Enter your comment:');
       if (!notificationContent) return;
 
       setIsUploading(true);

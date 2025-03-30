@@ -34,12 +34,20 @@ const utilities = {
       icon: icons.IconBrandSuperhuman,
       children: [
         {
+          id: 'all-documents',
+          title: 'All Documents',
+          type: 'item',
+          url: 'admin/all-documents',
+          breadcrumbs: false
+        },
+        {
           id: 'student-management',
           title: 'Student Management',
           type: 'item',
           url: 'admin/student-management',
           breadcrumbs: false
         },
+
         // {
         //   id: 'teacher-management',
         //   title: 'Teacher Management',
@@ -81,6 +89,13 @@ const utilities = {
           title: 'Your documents',
           type: 'item',
           url: 'student/your-documents',
+          breadcrumbs: false
+        },
+        {
+          id: 'student-transcript',
+          title: 'Search Courses',
+          type: 'item',
+          url: 'student/search-course',
           breadcrumbs: false
         },
         {

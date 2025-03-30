@@ -71,7 +71,7 @@ const getClassFromUser = async (courseCode, role) => {
     let docSnap = await getDoc(docRef);
     let store = {};
     const classArray = docSnap.data().classArray;
-    let isAccessed = false;
+    let isAccessed = true;
 
     if (classArray) {
       for (const i of Object.entries(classArray)) {

@@ -8,6 +8,7 @@ import Loadable from 'ui-component/Loadable';
 import PublicCourses from 'views/utilities/PublicCourses';
 // import { element } from 'prop-types';
 // import { element } from 'prop-types';
+// import { element } from 'prop-types';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
@@ -24,6 +25,7 @@ const CourseManagement = Loadable(lazy(() => import('views/utilities/CourseManag
 const CoursesSite = Loadable(lazy(() => import('views/utilities/CoursesSite')));
 const CourseDetail = Loadable(lazy(() => import('views/utilities/CourseDetail')));
 const CourseRegistration = Loadable(lazy(() => import('views/utilities/CourseRegistration')));
+const SearchCouse = Loadable(lazy(() => import('views/utilities/SearchCourse')));
 // sample page routing
 const AuthLogin3 = Loadable(lazy(() => import('views/pages/authentication/authentication3/Login3')));
 // Account Settings routing
@@ -39,12 +41,34 @@ const MainRoutes = {
       path: '/',
       element: userId === null ? <AuthLogin3 /> : <DashboardDefault />
     },
+
+
+
+    // {
+    //   path: 'public-documents',
+    //   element: <PublicCourses currentRole="student"  />
+    // },
+
+
     {
       path: 'dashboard',
       children: [
         {
           path: 'default',
           element: userId === null ? <AuthLogin3 /> : <DashboardDefault />
+        }
+      ]
+    },
+    {
+      path: 'admin',
+      children: [
+        {
+          path: 'all-documents',
+          element: <PublicCourses currentRole="admin"  />
+        },
+        {
+          path: 'all-documents/:courseCode',
+          element: <CourseDetail />
         }
       ]
     },
@@ -106,6 +130,10 @@ const MainRoutes = {
       path: 'student',
       children: [
         {
+          path: 'search-course',
+          element: <SearchCouse/>
+        },
+        {
           path: 'public-documents',
           element: <PublicCourses currentRole="student"  />
         },
@@ -116,16 +144,13 @@ const MainRoutes = {
         {
           path: 'your-documents',
           element:
-            userId === null || role !== 'student' ? (
-              <AuthLogin3 requiredRole="Student" />
-            ) : (
-              <CoursesSite currentRole="student" uid={userId} />
-            )
+
+              <CoursesSite currentRole="student" uid={userId} /> 
         },
         {
           path: 'your-documents/:courseCode',
           element: <CourseDetail />
-        }
+        },
       ]
     },
     {

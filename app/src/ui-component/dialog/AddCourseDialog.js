@@ -71,6 +71,7 @@ const AddCourseDialog = ({
       courseCode: courseCode,
       courseName: courseName,
       credit: credit,
+      
     };
     const result = await createCourse(output);
     if(result.status === "Success") toast.success(result.message)

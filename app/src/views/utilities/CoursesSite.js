@@ -7,30 +7,50 @@ import { gridSpacing } from 'store/constant';
 
 
 import { loadScheduleByStudent } from 'hooks/loadScheduleByStudent';
-import { loadScheduleByTeacher } from 'hooks/loadScheduleByTeacher';
+import { searchCourses } from 'layout/MainLayout/Header/SearchSection/searchCourse';
+// import { loadScheduleByTeacher } from 'hooks/loadScheduleByTeacher';
+// import 
+// import { loadAllCourse } from 'hooks/loadAllCourse';
 // ==============================|| CoursesSite ||============================== //
 
 const CoursesSite = ({currentRole, uid}) => {
   const [data, setData] = useState([])
+  const [searchQuery] = useState('')
 
   const courseImage = "https://foundr.com/wp-content/uploads/2023/04/How-to-create-an-online-course.jpg.webp";
-
+  // console.log(">>> id in course site", uid)
+  // const getData = async() => {
+  //   const schedule = currentRole === 'student'? await loadScheduleByStudent(uid) : await loadScheduleByTeacher(uid);
+  //   setData(schedule);
+  // }
   const getData = async() => {
-    const schedule = currentRole === 'student'? await loadScheduleByStudent(uid) : await loadScheduleByTeacher(uid);
+    const schedule = await loadScheduleByStudent(uid);
     setData(schedule);
   }
-
   useEffect(() =>{
     // eslint-disable-next-line react-hooks/exhaustive-deps
     getData();
    },[])
-   
+   const handleSearch = async () => {
+    if (searchQuery.trim()) {
+      console.log("SEARCH QUERY", searchQuery)
+      const results = await searchCourses(searchQuery);
+      setData(results);
+    } else {
+      setData([]);
+    }
+  };
+
+  useEffect(() => {
+    handleSearch(); // Gọi API tìm kiếm khi component mount
+  }, []);
 
   const renderCourses = () => {
     if (data && data.length) {
+      console.log("data schedule", data)
       return data.map(course => {
         return (
-          <Grid item xs={12} sm={6} md={4} key={course.courseID}>
+          <Grid item xs={12} sm={6} md={4} key={course.courseCode}>
             <Box
               sx={{
                 p: 5,
@@ -61,13 +81,13 @@ const CoursesSite = ({currentRole, uid}) => {
                   WebkitBoxOrient: "vertical",
                 }}
               >
-                {course.courseID}
+                {course.courseCode}
               </Typography>
               <Button
                 sx={{ mt: 4 }}
                 component={Link}
                 variant='outlined'
-                href={`/${currentRole}/your-documents/${course.courseID}`}
+                href={`/${currentRole}/your-documents/${course.courseCode}`}
               >
                 View Course content
               </Button>
@@ -81,7 +101,7 @@ const CoursesSite = ({currentRole, uid}) => {
   };
 
   return (
-    <MainCard title="Your Courses" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
+    <MainCard title="Courses you have followed" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
       <Grid container spacing={gridSpacing}>
         {renderCourses()}
       </Grid>

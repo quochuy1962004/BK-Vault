@@ -70,7 +70,7 @@ const PublicCourses = ({currentRole}) => {
                 sx={{ mt: 4 }}
                 component={Link}
                 variant='outlined'
-                href={`/${currentRole}/courses-site/${course.courseID}`}
+                href={currentRole === 'student' ? `/${currentRole}/your-documents/${course.courseCode}` : `/${currentRole}/all-documents/${course.courseCode}`}
               >
                 View Course content
               </Button>
@@ -84,7 +84,7 @@ const PublicCourses = ({currentRole}) => {
   };
 
   return (
-    <MainCard title="Your Courses" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
+    <MainCard title="Public Courses" secondary={<SecondaryAction link="https://next.material-ui.com/system/typography/" />}>
       <Grid container spacing={gridSpacing}>
         {renderCourses()}
       </Grid>

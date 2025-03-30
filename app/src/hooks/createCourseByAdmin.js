@@ -16,7 +16,11 @@ export const createCourse = async (output) => {
     courseName: output.courseName,
     courseCode: output.courseCode,
     credit: output.credit,
-    classArray: [],
+    //default
+    classArray: [{
+      classID: "L01",
+      teacherID: "OQ0sOgbp1lbzfvqoYqhyI0boDp73"
+    }],
     courseDocuments: []
   });
   return {status: "Success", message: "Create course successfully!"};
